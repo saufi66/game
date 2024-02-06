@@ -6,7 +6,7 @@ const paddle = document.querySelector(".paddle");
 const displayScore = document.querySelector(".score");
 const touch = document.querySelector(".touchWall");
 const blockBreak = document.querySelector(".break");
-const gameOver = document.querySelector('.gameOver')
+const gameOver = document.querySelector(".gameOver");
 document.title = "game brick";
 let paddleX = 140;
 let ballGone = 168;
@@ -30,8 +30,8 @@ const updatePaddle = () => {
   if (paddleX < 1) {
     paddleX = 1;
   }
-  if (paddleX > 280) {
-    paddleX = 280;
+  if (paddleX > 290) {
+    paddleX = 290;
   }
   paddle.style.left = paddleX + "px";
   requestAnimationFrame(updatePaddle);
@@ -40,7 +40,7 @@ const updatePaddle = () => {
 const updateBall = () => {
   ballY += ballGerakY;
   ballX += ballGerakX;
-  if (ballX < 0 || ballX > 350) {
+  if (ballX < 0 || ballX > 360) {
     ballGerakX = -ballGerakX;
     if (music) {
       music = true;
@@ -66,7 +66,7 @@ const updateBall = () => {
     ballX < paddleX + 80
   ) {
     ballGerakY = -ballGerakY;
-    if (ballY > 610 - 20) {
+    if (ballY > game.clientHeight - 20) {
       music = true;
       touch.src = "/sound/touch.mp3";
     } else if (music == false) {
@@ -74,19 +74,18 @@ const updateBall = () => {
       touch.src = "";
     }
   }
-  if (ballY > game.clientHeight -5) {
-    ballY = 350
-    ballX = 168
+  if (ballY > game.clientHeight - 5) {
+    ballY = 350;
+    ballX = 168;
     if (ballY < 350) {
-      ballY = 350
-      ballX = 168
+      ballY = 350;
+      ballX = 168;
     }
     gameRestart.style.display = "block";
     ball.style.display = "none";
     gameMute();
+  }
 
-}
-  
   const bricks = document.querySelectorAll(".brick");
   bricks.forEach((brick) => {
     if (
@@ -110,7 +109,7 @@ const updateBall = () => {
 };
 const gameMute = () => {
   touch.src = "";
-  blockBreak.src = ""; 
+  blockBreak.src = "";
 };
 const restart = () => {
   const bricks = document.querySelectorAll(".brick");
@@ -125,7 +124,7 @@ const restart = () => {
     if (ballY < brick.offsetTop) {
       console.log("lebih");
       console.log(ballY);
-      gameRestart.style.display = 'block'
+      gameRestart.style.display = "block";
     }
   });
   displayScore.innerHTML = "";
@@ -139,7 +138,7 @@ gameStart.addEventListener("click", () => {
 gameRestart.addEventListener("click", () => {
   gameRestart.style.display = "none";
   ball.style.display = "block";
-  gameOver.src = '';
+  gameOver.src = "";
   restart();
 });
 document.addEventListener("mousemove", (e) => {
