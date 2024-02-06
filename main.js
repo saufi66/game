@@ -17,132 +17,140 @@ let ballGerakX = 2;
 let score = 0;
 let kondisiBall = false;
 let music = false;
+let over = 0;
+const arrayMusic = ["/sound/touch.mp3", "/sound/break.mp3"];
 const create = () => {
-  for (let c = 0; c < 100; c++) {
-    const brick = document.createElement("div");
-    brick.className = "brick";
-    brick.style.left = (c % 10) * 36.4 + "px";
-    brick.style.top = Math.floor(c / 10) * 30 + "px";
-    game.appendChild(brick);
-  }
+    for (let c = 0; c < 100; c++) {
+        const brick = document.createElement("div");
+        brick.className = "brick";
+        brick.style.left = (c % 10) * 37.7 + "px";
+        brick.style.top = Math.floor(c / 10) * 30 + "px";
+        game.appendChild(brick);
+    }
 };
 const updatePaddle = () => {
-  if (paddleX < 1) {
-    paddleX = 1;
-  }
-  if (paddleX > 290) {
-    paddleX = 290;
-  }
-  paddle.style.left = paddleX + "px";
-  requestAnimationFrame(updatePaddle);
+    if (paddleX < -1) {
+        paddleX = -1;
+    }
+    if (paddleX > 305) {
+        paddleX = 305;
+    }
+    paddle.style.left = paddleX + "px";
+    requestAnimationFrame(updatePaddle);
 };
 
 const updateBall = () => {
-  ballY += ballGerakY;
-  ballX += ballGerakX;
-  if (ballX < 0 || ballX > 360) {
-    ballGerakX = -ballGerakX;
-    if (music) {
-      music = true;
-      touch.src = "/sound/touch.mp3";
-    } else if (music == false) {
-      music = true;
-      touch.src = "";
+    ballY += ballGerakY;
+    ballX += ballGerakX;
+    if (ballX < 0 || ballX > 372) {
+        ballGerakX = -ballGerakX;
+        if (music) {
+            music = true;
+            touch.src = arrayMusic[0];
+        } else if (music == false) {
+            music = true;
+            touch.src = "";
+        }
     }
-  }
-  if (ballY < 0) {
-    ballGerakY = -ballGerakY;
-    if (music) {
-      music = true;
-      touch.src = "/sound/touch.mp3";
-    } else if (music == false) {
-      music = true;
-      touch.src = "";
+    if (ballY < 0) {
+        ballGerakY = -ballGerakY;
+        if (music) {
+            music = true;
+            touch.src = arrayMusic[0];
+        } else if (music == false) {
+            music = true;
+            touch.src = "";
+        }
     }
-  }
-  if (
-    ballY > game.clientHeight - 20 &&
-    ballX > paddleX &&
-    ballX < paddleX + 80
-  ) {
-    ballGerakY = -ballGerakY;
-    if (ballY > game.clientHeight - 20) {
-      music = true;
-      touch.src = "/sound/touch.mp3";
-    } else if (music == false) {
-      music = true;
-      touch.src = "";
-    }
-  }
-  if (ballY > game.clientHeight - 5) {
-    ballY = 350;
-    ballX = 168;
-    if (ballY < 350) {
-      ballY = 350;
-      ballX = 168;
-    }
-    gameRestart.style.display = "block";
-    ball.style.display = "none";
-    gameMute();
-  }
-
-  const bricks = document.querySelectorAll(".brick");
-  bricks.forEach((brick) => {
     if (
-      ballY < brick.offsetTop + 40 &&
-      ballY > brick.offsetTop &&
-      ballX > brick.offsetLeft &&
-      ballX < brick.offsetLeft + 40
+        ballY > game.clientHeight - 20 &&
+        ballX > paddleX &&
+        ballX < paddleX + 80
     ) {
-      ballGerakY = -ballGerakY;
-      brick.remove();
-      score += 10;
-      displayScore.innerHTML = "score" + " " + score;
-      blockBreak.src = "/sound/break.mp3";
+        ballGerakY = -ballGerakY;
+        if (ballY > game.clientHeight - 20) {
+            music = true;
+            touch.src = arrayMusic[0];
+        } else if (music == false) {
+            music = true;
+            touch.src = "";
+        }
     }
-  });
-  ball.style.top = ballY + "px";
-  ball.style.left = ballX + "px";
 
-  requestAnimationFrame(updateBall);
-  ballGerakX = ballGerakX;
+    if (ballY > game.clientHeight - 5) {
+        gameMute();
+        ballY = 350;
+        ballX = 168;
+        if (ballY < 350) {
+            ballY = 350;
+            ballX = 168;
+        }
+        gameRestart.style.display = "block";
+        ball.style.display = "none";
+    }
+    const bricks = document.querySelectorAll(".brick");
+    bricks.forEach(brick => {
+        if (
+            ballY < brick.offsetTop + 40 &&
+            ballY > brick.offsetTop &&
+            ballX > brick.offsetLeft &&
+            ballX < brick.offsetLeft + 40
+        ) {
+            ballGerakY = -ballGerakY;
+            brick.remove();
+            score += 10;
+            displayScore.innerHTML = "score" + " " + score;
+
+            blockBreak.src = arrayMusic[1];
+        }
+    });
+    ball.style.top = ballY + "px";
+    ball.style.left = ballX + "px";
+
+    requestAnimationFrame(updateBall);
+    ballGerakX = ballGerakX;
 };
 const gameMute = () => {
-  touch.src = "";
-  blockBreak.src = "";
+    arrayMusic.pop();
+    arrayMusic.pop();
+};
+const play = () => {
+    arrayMusic.push("/sound/touch.mp3");
+    arrayMusic.push("/sound/break.mp3");
 };
 const restart = () => {
-  const bricks = document.querySelectorAll(".brick");
-  bricks.forEach((brick) => brick.remove());
-  ballY = 350;
-  ballX = 168;
-  score = 0;
-  bricks.forEach((brick) => {
-    if (ballY > brick.offsetTop + 10 || ballY < brick.offsetTop + 10) {
-      ballY = ballY;
-    }
-    if (ballY < brick.offsetTop) {
-      console.log("lebih");
-      console.log(ballY);
-      gameRestart.style.display = "block";
-    }
-  });
-  displayScore.innerHTML = "";
-  create();
+    const bricks = document.querySelectorAll(".brick");
+    bricks.forEach(brick => brick.remove());
+    ballY = 350;
+    ballX = 168;
+    score = 0;
+    bricks.forEach(brick => {
+        if (ballY > brick.offsetTop + 10 || ballY < brick.offsetTop + 10) {
+            ballY = ballY;
+        }
+        if (ballY < brick.offsetTop) {
+            console.log("lebih");
+            console.log(ballY);
+            gameRestart.style.display = "block";
+        }
+    });
+    displayScore.innerHTML = "";
+    create();
 };
 gameStart.addEventListener("click", () => {
-  gameStart.style.display = "none";
-  updateBall();
-  updatePaddle();
+    gameStart.style.display = "none";
+    updateBall();
+    updatePaddle();
 });
 gameRestart.addEventListener("click", () => {
-  gameRestart.style.display = "none";
-  ball.style.display = "block";
-  gameOver.src = "";
-  restart();
+    gameRestart.style.display = "none";
+    ball.style.display = "block";
+    gameOver.src = "";
+    play();
+    restart();
 });
-document.addEventListener("mousemove", (e) => {
-  paddleX =
-    e.clientX - game.getBoundingClientRect().left - paddle.clientWidth / 2;
+document.addEventListener("mousemove", e => {
+    paddleX =
+        e.clientX - game.getBoundingClientRect().left - paddle.clientWidth / 2;
 });
 create();
