@@ -154,3 +154,5 @@ document.addEventListener("mousemove", e => {
         e.clientX - game.getBoundingClientRect().left - paddle.clientWidth / 2;
 });
 create();
+touch.play()
+blockBreak.play()
