@@ -25,7 +25,7 @@ let ballX = 160;
 let ballY = 280;
 let ballGerakX = 2;
 let ballGerakY = 2;
-let ballSpeed = 100000; //20
+let ballSpeed = 20; //20
 let score = 0;
 const create = () => {
   for (let c = 0; c < 120; c++) {
