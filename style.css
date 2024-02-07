@@ -6,24 +6,21 @@
 body {
   display: grid;
   place-items: center;
-  background: linear-gradient(
-      to right,
-      rgba(255, 0, 255, 0.5),
-      rgba(0, 255, 255, 0.5)
-    ),
+  background: url(/img/pattern-7455773_640.webp),
+    linear-gradient(to right, rgba(255, 0, 255, 0.5), rgba(0, 255, 255, 0.5)),
     rgba(0, 0, 0, 0.956);
-    overflow: hidden;
+  overflow: hidden;
 }
 section {
   position: relative;
   margin: 3.8vh auto 0 auto;
-  background: rgba(30, 29, 29, 0.6);
-  backdrop-filter: blur(180%);
-  width: 390px;
-  height: 700px;
-  box-shadow: 0 0 3px 2px rgb(255, 255, 255, 0.7), -0 -0 3px 2px rgba(255,255,255, 0.7);
-  border-radius: 4px 4px 10px 10px;
-  border: 3px solid transparent;
+  background: linear-gradient(to bottom, rgb(41, 41, 41), rgb(31, 31, 31));
+  filter: blur(100%) brightness(160%);
+  width: 373px;
+  height: 574px;
+  border-top: 3px solid rgba(255, 255, 255, 0.735);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.783);
+  border-radius: 0 0 7px 7px;
 }
 .ball {
   position: absolute;
@@ -34,34 +31,44 @@ section {
   height: 15px;
   background: rgb(255, 255, 255);
   border-radius: 50%;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5), -0 -0 2px 1px rgba(255, 255, 255, 0.5);
-  transition: all 0.1s;
 }
+
 .paddle {
   position: absolute;
-  left: 140px;
   width: 80px;
   height: 10px;
-  background: rgb(90, 80, 255);
+  left: 130px;
+  bottom: 0;
+  background: rgb(80, 118, 255);
   border-radius: 8px;
-  bottom: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.956);
 }
+
 .score {
-  margin-top: -30px;
+  margin-top: -27px;
+  padding-top: 2px;
   padding-left: 15px;
   color: #ffffffd5;
   font: bold 1.1em sans-serif;
   letter-spacing: 0.09em;
   text-transform: capitalize;
+  background: rgb(45, 45, 45);
+  height: 25px;
 }
 .brick {
   position: absolute;
-  width: 45px;
-  height: 20px;
-  background-color: #11ff03d9;
-  border: 1.5px solid #2f2e2d;
+  margin: 4.5px 1.5px 0 1.5px;
+  width: 39px;
+  height: 17px;
+  background-color: #47db34;
+  border: 3.5px solid rgb(1, 1, 1);
+  border-top: none;
+  border-bottom: none;
   box-sizing: border-box;
+  border-radius: 4px;
+  transition: all 0.1s;
+}
+.brick:hover {
+  transform: scale(0.9);
 }
 .startGame {
   position: relative;

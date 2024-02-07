@@ -1,158 +1,119 @@
-const gameStart = document.querySelector(".startGame");
-const gameRestart = document.querySelector(".restartGame");
-const ball = document.querySelector(".ball");
 const game = document.querySelector("section");
+const Start = document.querySelector(".startGame");
+const Restart = document.querySelector(".restartGame");
+const gameOver = document.querySelector(".gameOver");
+const ball = document.querySelector(".ball");
 const paddle = document.querySelector(".paddle");
 const displayScore = document.querySelector(".score");
 const touch = document.querySelector(".touchWall");
 const blockBreak = document.querySelector(".break");
-const gameOver = document.querySelector(".gameOver");
+const background = [
+  "red",
+  "orange",
+  "blue",
+  "violet",
+  "yellow",
+  "$00e5ffa1",
+  "pink",
+];
 document.title = "game brick";
-let paddleX = 140;
-let ballGone = 168;
-let ballY = 350;
-let ballX = 168;
-let ballGerakY = 2;
+let touchStartX = 0;
+let paddleStartX = 0;
+let paddleX = 130;
+let paddleSpeed = 0;
+let ballX = 160;
+let ballY = 280;
 let ballGerakX = 2;
+let ballGerakY = 2;
+let ballSpeed = 100000; //20
 let score = 0;
-let kondisiBall = false;
-let music = false;
-let over = 0;
-const arrayMusic = ["/sound/touch.mp3", "/sound/break.mp3"];
 const create = () => {
-    for (let c = 0; c < 100; c++) {
-        const brick = document.createElement("div");
-        brick.className = "brick";
-        brick.style.left = (c % 10) * 37.7 + "px";
-        brick.style.top = Math.floor(c / 10) * 30 + "px";
-        game.appendChild(brick);
-    }
+  for (let c = 0; c < 120; c++) {
+    const block = document.createElement("div");
+    const random = Math.floor(Math.random() * background.length);
+    block.className = "brick";
+    block.style.background = background[random];
+    block.style.left = (c % 10) * 36.8 + "px";
+    block.style.top = Math.floor(c / 10) * 21.5 + "px";
+    game.appendChild(block);
+  }
 };
-const updatePaddle = () => {
-    if (paddleX < -1) {
-        paddleX = -1;
-    }
-    if (paddleX > 305) {
-        paddleX = 305;
-    }
-    paddle.style.left = paddleX + "px";
-    requestAnimationFrame(updatePaddle);
-};
+setInterval(framePaddle, paddleSpeed);
+setInterval(frameBall, ballSpeed);
+function framePaddle() {
+  if (paddleX > game.clientWidth - 100) {
+    paddleX = 292;
+  }
+  if (paddleX < 1) {
+    paddleX = 1;
+  }
+  paddle.style.left = `${paddleX}px`;
+}
+function frameBall() {
+  ballX += ballGerakX;
+  ballY += ballGerakY;
+  if (ballX < 0 || ballX > game.clientWidth - 10) {
+    ballGerakX = -ballGerakX;
+    touch.play();
+  }
+  if (ballY < 0) {
+    ballGerakY = -ballGerakY;
+    touch.play();
+  }
+  // if (ballY > game.clientHeight) {
 
-const updateBall = () => {
-    ballY += ballGerakY;
-    ballX += ballGerakX;
-    if (ballX < 0 || ballX > 372) {
-        ballGerakX = -ballGerakX;
-        if (music) {
-            music = true;
-            touch.src = arrayMusic[0];
-        } else if (music == false) {
-            music = true;
-            touch.src = "";
-        }
-    }
-    if (ballY < 0) {
-        ballGerakY = -ballGerakY;
-        if (music) {
-            music = true;
-            touch.src = arrayMusic[0];
-        } else if (music == false) {
-            music = true;
-            touch.src = "";
-        }
-    }
+  // }
+  if (
+    ballY > game.clientHeight - 22 &&
+    ballX > paddleX - 1 &&
+    ballX < paddleX + 180
+  ) {
+    ballGerakY = -ballGerakY;
+    touch.play();
+  }
+  const block = document.querySelectorAll(".brick");
+  block.forEach((brick) => {
     if (
-        ballY > game.clientHeight - 20 &&
-        ballX > paddleX &&
-        ballX < paddleX + 80
+      ballY < brick.offsetTop + 20 &&
+      ballY > brick.offsetTop &&
+      ballX > brick.offsetLeft &&
+      ballX < brick.offsetLeft + 50
     ) {
-        ballGerakY = -ballGerakY;
-        if (ballY > game.clientHeight - 20) {
-            music = true;
-            touch.src = arrayMusic[0];
-        } else if (music == false) {
-            music = true;
-            touch.src = "";
-        }
+      ballGerakY = -ballGerakY;
+      brick.style.transfrom = "scale(0.9)";
+      blockBreak.play();
+      setTimeout(() => {
+        brick.remove();
+      }, 10);
+      score += 10;
+      displayScore.innerHTML = `score ${score}`;
     }
-
-    if (ballY > game.clientHeight - 5) {
-        gameMute();
-        ballY = 350;
-        ballX = 168;
-        if (ballY < 350) {
-            ballY = 350;
-            ballX = 168;
-        }
-        gameRestart.style.display = "block";
-        ball.style.display = "none";
-    }
-    const bricks = document.querySelectorAll(".brick");
-    bricks.forEach(brick => {
-        if (
-            ballY < brick.offsetTop + 40 &&
-            ballY > brick.offsetTop &&
-            ballX > brick.offsetLeft &&
-            ballX < brick.offsetLeft + 40
-        ) {
-            ballGerakY = -ballGerakY;
-            brick.remove();
-            score += 10;
-            displayScore.innerHTML = "score" + " " + score;
-
-            blockBreak.src = arrayMusic[1];
-        }
-    });
-    ball.style.top = ballY + "px";
-    ball.style.left = ballX + "px";
-
-    requestAnimationFrame(updateBall);
-    ballGerakX = ballGerakX;
-};
-const gameMute = () => {
-    arrayMusic.pop();
-    arrayMusic.pop();
-};
-const play = () => {
-    arrayMusic.push("/sound/touch.mp3");
-    arrayMusic.push("/sound/break.mp3");
-};
-const restart = () => {
-    const bricks = document.querySelectorAll(".brick");
-    bricks.forEach(brick => brick.remove());
-    ballY = 350;
-    ballX = 168;
-    score = 0;
-    bricks.forEach(brick => {
-        if (ballY > brick.offsetTop + 10 || ballY < brick.offsetTop + 10) {
-            ballY = ballY;
-        }
-        if (ballY < brick.offsetTop) {
-            console.log("lebih");
-            console.log(ballY);
-            gameRestart.style.display = "block";
-        }
-    });
-    displayScore.innerHTML = "";
-    create();
-};
-gameStart.addEventListener("click", () => {
-    gameStart.style.display = "none";
-    updateBall();
-    updatePaddle();
+  });
+  ball.style.left = `${ballX}px`;
+  ball.style.top = `${ballY}px`;
+}
+document.addEventListener("mousemove", (e) => {
+  paddleX =
+    e.clientX - game.getBoundingClientRect().left - paddle.clientWidth / 2;
 });
-gameRestart.addEventListener("click", () => {
-    gameRestart.style.display = "none";
-    ball.style.display = "block";
-    gameOver.src = "";
-    play();
-    restart();
-});
-document.addEventListener("mousemove", e => {
-    paddleX =
-        e.clientX - game.getBoundingClientRect().left - paddle.clientWidth / 2;
-});
+
+function handleTouchStart(e) {
+  touchStartX = e.touches[0].clientX;
+  paddleStartX = paddle.offsetLeft;
+}
+
+function handleTouchMove(e) {
+  const touchX = e.touches[0].clientX;
+  const deltaX = touchX - touchStartX;
+  paddle.style.left = paddleStartX + deltaX + "px";
+  e.preventDefault(); // Prevent page scrolling
+}
+
+function handleTouchEnd() {
+  // Do something on touch end if needed
+}
+
+document.addEventListener("touchstart", handleTouchStart);
+document.addEventListener("touchmove", handleTouchMove);
+document.addEventListener("touchend", handleTouchEnd);
 create();
-touch.play()
-blockBreak.play()

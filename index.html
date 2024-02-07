@@ -1,25 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
 
-    <body>
-        <audio src="" class="gameOver" autoplay play></audio>
-        <audio src="" autoplay class="touchWall" play></audio>
-        <audio src="" class="break" autoplay play></audio>
-        <section>
-            <div class="score">score</div>
-            <div class="ball"></div>
-            <div class="paddle"></div>
-            <button class="startGame">
-                <div class="text">click to play</div>
-            </button>
-            <button class="restartGame"><div class="text">restart</div></button>
-        </section>
-        <script src="main.js"></script>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <audio src="/sound/gameOver.mp3" class="gameOver"></audio>
+  <audio src="/sound/touch.mp3" class="touchWall" play></audio>
+  <audio src="/sound/break.mp3" class="break" play></audio>
+  <section>
+    <div class="score">score</div>
+    <div class="ball"></div>
+    <div class="paddle"></div>
+    <button class="startGame">
+      <div class="text">click to play</div>
+    </button>
+    <button class="restartGame">
+      <div class="text">restart</div>
+    </button>
+  </section>
+  <script src="main.js"></script>
+</body>
+
 </html>
