@@ -9,26 +9,27 @@
 </head>
 
 <body>
-  <audio src="/sound/gameOver.mp3" class="gameOver"></audio>
-  <audio src="/sound/touch.mp3" class="touchWall" play></audio>
-  <audio src="/sound/break.mp3" class="break" play></audio>
-  <main>
-      <div class="loading-container">
+    <div class="loading-container">
     <div class="loader"></div>
     <div class="loader"></div>
     <div class="loader"></div>
     <div class="loader"></div>
   </div>
+  <audio src="/sound/gameOver.mp3" class="gameOver"></audio>
+  <audio src="/sound/touch.mp3" class="touchWall" play></audio>
+  <audio src="/sound/break.mp3" class="break" play></audio>
+  <audio src="/sound/button.mp3" class="buttonClick"></audio>
+  <main>
+    <div id="header">Bricks Blocks</div>
     <button class="play" id="antarmuka">play game</button>
     <button class="changeColor" id="antarmuka">change color</button>
-    
   </main>
   <section>
     <div class="score">score</div>
     <div class="ball"></div>
     <div class="paddle"></div>
     <button class="startGame">
-      <div class="text">click to play</div>
+      <div class="text">touch to play</div>
     </button>
     <button class="restartGame">
       <div class="text">restart</div>

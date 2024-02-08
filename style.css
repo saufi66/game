@@ -13,16 +13,17 @@ body {
   overflow: hidden;
 }
 section {
-
   position: relative;
-  margin: 3.8vh auto 0 auto;
+  margin-top: 3.5vh;
   background: linear-gradient(to bottom, rgba(41, 41, 41, 0.5), rgba(31, 31, 31, 0.5));
   filter: blur(180%) brightness(200%);
-  width: 395px;
+  width: 398px;
   height: 680px;
   border-top: 3px solid rgba(255, 255, 255, 0.735);
   border-bottom: 3px solid rgba(255, 255, 255, 0.783);
   border-radius: 0 0 7px 7px;
+  opacity: 0;
+  transition: all 1s;
 }
 .ball {
   position: absolute;
@@ -102,7 +103,7 @@ section {
   transform: translate(0, 100px);
 }
 main {
-  display: none;
+  display: flex;
   justify-content: center;
   text-align: center;
   gap: 5em;
@@ -110,6 +111,15 @@ main {
   height: 93.4vh;
   background: linear-gradient(to right, rgba(255,255,255,0.5), rgba(255,255,255,0.5));
   box-shadow: inset 0 0 3px 4px rgba(34,34,34,8), inset -0 -0 3px 4px rgba(34,34,34,8);
+}
+ #header {
+  position: absolute;
+  color: rgb(146,13,255);
+  text-shadow: -1px 1px #000;
+  font-size: 2.2em;
+  transform: translate(0, 1em);
+  opacity: 0;
+  transition: all 1s;
 }
 main > button {
   transform: translate(0, 20em);
@@ -123,7 +133,8 @@ color: #fff;
   text-transform: capitalize;
   font: normal 1em verdana;
   box-shadow: inset 1px 1px 3px #fff, inset -1px -1px 3px #363645;
-  transition: all 0.5s;
+  opacity: 0;
+  transition: all 1s;
 }
 main > button:active {
   transform: translate(0,25em) scale(0.9);
@@ -137,12 +148,13 @@ main > button:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.5s;
 }
 
 .loader {
   width: 20px;
   height: 20px;
-  background-color: #3498db;
+  background-color: rgb(255,13,227);
   border-radius: 50%;
   animation: bounce 0.6s infinite alternate;
 }
